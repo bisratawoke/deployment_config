@@ -1,0 +1,30 @@
+version: "3.2"
+services:
+  entry:
+    image: haproxytech/haproxy-debian:2.4
+    volumes:
+      - /home/ubuntu/Desktop/test/haproxytest:/usr/local/etc/haproxy
+    ports:
+      - "80:80"
+      - "5555:5555"
+    depends_on:
+      - "swiftbase.com"
+      - "test.com"
+      
+  swiftbase.com:
+    image: haproxytech/haproxy-debian:2.4
+    volumes:
+      - /home/ubuntu/Desktop/test/haproxytest/swiftbase:/usr/local/etc/haproxy
+    depends_on:
+      - "splash"
+      - "account"
+      
+  splash:
+    image: bisratawoke/splash:latest
+    
+  
+  account:
+    image: bisratawoke/account:latest
+      
+  test.com:
+    image: test.com
