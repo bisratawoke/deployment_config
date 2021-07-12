@@ -9,7 +9,7 @@ services:
       - "5555:5555"
     depends_on:
       - "swiftbase.com"
-      - "test.com"
+      
       
   swiftbase.com:
     image: haproxytech/haproxy-debian:2.4
@@ -18,13 +18,26 @@ services:
     depends_on:
       - "splash"
       - "account"
+      - "postgres"
       
   splash:
     image: bisratawoke/splash:latest
-    
   
+  postgres:
+    image: postgres:alpine
+    environment:
+      - POSTGRES_PASSWORD=blackkush
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=project_base
+    volumes:
+      - postgres_vol:/var/lib/postgresql/data
+    
   account:
     image: bisratawoke/account:latest
-      
-  test.com:
-    image: test.com
+  
+  project-managment:
+    image: bisratawoke/project-managment:latest
+
+volumes:
+  postgres_vol:
+    external: true
