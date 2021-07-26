@@ -3,25 +3,36 @@ services:
   entry:
     image: haproxytech/haproxy-debian:2.4
     volumes:
-      - /home/ubuntu/Desktop/test/haproxytest:/usr/local/etc/haproxy
+      - /home/ubuntu/Desktop/test/haproxytest/secondTest:/usr/local/etc/haproxy
     ports:
       - "80:80"
       - "5555:5555"
     depends_on:
       - "swiftbase.com"
+    networks:
+      - tester
       
       
   swiftbase.com:
     image: haproxytech/haproxy-debian:2.4
     volumes:
-      - /home/ubuntu/Desktop/test/haproxytest/swiftbase:/usr/local/etc/haproxy
+      - /home/ubuntu/Desktop/test/haproxytest/secondTest/swiftbase:/usr/local/etc/haproxy
     depends_on:
       - "splash"
       - "account"
       - "postgres"
+      - "project-ui"
+      - "project-managment"
+      - "deployment"
+
+    networks:
+      - tester
+  
       
   splash:
     image: bisratawoke/splash:latest
+    networks:
+      - tester
   
   postgres:
     image: postgres:alpine
@@ -31,13 +42,38 @@ services:
       - POSTGRES_DB=project_base
     volumes:
       - postgres_vol:/var/lib/postgresql/data
+    networks:
+      - tester
+    ports:
+      - '5432:5432'
+  
     
   account:
     image: bisratawoke/account:latest
+    networks:
+      - tester
   
   project-managment:
     image: bisratawoke/project-managment:latest
+    networks:
+      - tester
+    
+  project-ui:
+    image: bisratawoke/project-ui:latest
+    networks:
+      - tester
+      
+  deployment:
+    image: bisratawoke/deployment:latest
+    networks:
+      - tester
 
+
+    
+networks:
+  tester:
+    driver: bridge
+    
 volumes:
   postgres_vol:
     external: true
