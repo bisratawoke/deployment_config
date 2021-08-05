@@ -3,7 +3,7 @@ services:
   entry:
     image: haproxytech/haproxy-debian:2.4
     volumes:
-      - /home/ubuntu/Desktop/test/haproxytest/secondTest:/usr/local/etc/haproxy
+      - /home/ubuntu/Desktop/test/haproxytest/thirdTest:/usr/local/etc/haproxy
     ports:
       - "80:80"
       - "5555:5555"
@@ -16,7 +16,7 @@ services:
   swiftbase.com:
     image: haproxytech/haproxy-debian:2.4
     volumes:
-      - /home/ubuntu/Desktop/test/haproxytest/secondTest/swiftbase:/usr/local/etc/haproxy
+      - /home/ubuntu/Desktop/test/haproxytest/thirdTest/swiftbase:/usr/local/etc/haproxy
     depends_on:
       - "splash"
       - "account"
@@ -45,7 +45,7 @@ services:
     networks:
       - tester
     ports:
-      - '5432:5432'
+      - "5432:5432"
   
     
   account:

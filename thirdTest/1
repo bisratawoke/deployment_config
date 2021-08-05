@@ -1,5 +1,5 @@
-# _md5hash=4a1492d944ea7fe08751268d52df947d
-# _version=13
+# _md5hash=a130161dd644c7d9caca10168ab7ebe8
+# _version=7
 # Dataplaneapi managed File
 # changing file directly can cause a conflict if dataplaneapi is running
 
@@ -17,49 +17,25 @@ frontend entry
   use_backend %[req.hdr(Host),lower]
   default_backend swiftbase.com
 
-backend blamegame.com 
+backend jam.com 
   mode http
-  server server1 blamegame.com:80
-
-backend camelot.com 
-  mode http
-  server server1 camelot.com:80
-
-backend facebook.com 
-  mode http
-  server server1 facebook.com:80
-
-backend hot.com 
-  mode http
-  server server1 hot.com:80
-
-backend jackblack.com 
-  mode http
-  server server1 jackblack.com:80
-
-backend jamstore.com 
-  mode http
-  server server1 jamstore.com:80
+  server server1 jam.com
 
 backend project.swiftbase.com 
   balance roundrobin
   server server1 project-ui
 
-backend roseshop.com 
+backend rat.com 
   mode http
-  server server1 roseshop.com:80
+  server server1 rat.com
 
-backend strongman.com 
+backend rat.com:8000
   mode http
-  server server1 strongman.com:80
+  server server1 rat.com:8000
 
 backend swiftbase.com 
   balance roundrobin
   server server1 swiftbase.com
-
-backend telegram.com 
-  mode http
-  server server1 telegram.com:80
 
 program api 
   command /usr/bin/dataplaneapi --host 0.0.0.0 --port 5555 --haproxy-bin /usr/sbin/haproxy --config-file /usr/local/etc/haproxy/haproxy.cfg --reload-cmd "kill -SIGUSR2 1" --reload-delay 5 --userlist haproxy-dataplaneapi
